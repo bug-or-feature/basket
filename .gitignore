@@ -1,6 +1,3 @@
-.gradle
-build/
-
 # Ignore Gradle GUI config
 gradle-app.setting
 
@@ -9,3 +6,27 @@ gradle-app.setting
 
 # Cache of project
 .gradletasknamecache
+
+*.class
+*.war
+*.ear
+*.log
+*.iml
+*.ipr
+*.iws
+
+.DS_Store
+.classpath
+.project
+.idea
+.gradle
+
+target/
+build/
+notes/
+
+out
+test-output
+
+hs_err_pid*
+
