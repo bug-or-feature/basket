@@ -13,9 +13,19 @@ Build a command line application, with components designed for extensibility
 3. Enable user input
 4. Enable enhanced config options 
 
+# howto
+
+* build
+
+    ./gradlew build
+
+* run
+
+    java -jar build/libs/basket-1.0.0.jar
+
 
 # quality
 
-[CI](http://jenkins.bugorfeature.net:7070/job/basket/)
+[ci](http://jenkins.bugorfeature.net:7070/job/basket/)
 
 [sonarqube](http://sonar.bugorfeature.net:9000/dashboard/index/535)
