@@ -22,6 +22,35 @@ build
 run
 
     java -jar build/libs/basket-1.0.0.jar
+    
+or, with custom config
+    
+    java -jar build/libs/basket-1.0.0.jar config.xml
+
+where config.xml looks like
+
+    <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+    <basketConfig>
+        <products>
+            <entry>
+                <key>BANANA</key>
+                <value>
+                    <price>0.35</price>
+                    <minCount>1</minCount>
+                </value>
+            </entry>
+            <entry>
+                <key>APPLE</key>
+                <value>
+                    <price>0.20</price>
+                    <minCount>1</minCount>
+                </value>
+            </entry>
+            
+            ... etc ...
+            
+        </products>
+    </basketConfig>
 
 
 # quality
