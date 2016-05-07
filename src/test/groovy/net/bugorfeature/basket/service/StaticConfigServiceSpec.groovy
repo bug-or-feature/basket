@@ -13,12 +13,13 @@ class StaticConfigServiceSpec extends Specification {
 
     ConfigService service
 
-    def setup() {
-        service = new StaticConfigService()
-    }
-
     @Unroll("Configured price - item: #item, price: #price")
     def "check prices"(ShoppingItem item, BigDecimal price) {
+
+        setup:
+            service = new StaticConfigService()
+            service.buildDefault()
+
         expect:
             service.getPriceForItem(item) == price
 
@@ -31,8 +32,26 @@ class StaticConfigServiceSpec extends Specification {
             ShoppingItem.PEACH  | new BigDecimal("0.50")
     }
 
+    def "missing config throws exception for price"() {
+
+        setup:
+            service = new StaticConfigService()
+            service.setConfigForItem(ShoppingItem.BANANA, new BigDecimal("0.50"), 0)
+
+        when:
+            service.getPriceForItem(ShoppingItem.APPLE)
+
+        then:
+            thrown(IllegalArgumentException)
+    }
+
+
     @Unroll("Configured minimum - item: #item, minimum: #minimum")
     def "check minimums"(ShoppingItem item, int minimum) {
+        setup:
+            service = new StaticConfigService()
+            service.buildDefault()
+
         expect:
             service.getMinimumForItem(item) == minimum
 
@@ -45,7 +64,23 @@ class StaticConfigServiceSpec extends Specification {
             ShoppingItem.PEACH  | 1
     }
 
+    def "missing config throws exception for minimum"() {
+
+        setup:
+            service = new StaticConfigService()
+            service.setConfigForItem(ShoppingItem.BANANA, new BigDecimal("0.50"), 0)
+
+        when:
+            service.getMinimumForItem(ShoppingItem.APPLE)
+
+        then:
+            thrown(IllegalArgumentException)
+    }
+
     def "config list contains all shopping items"() {
+        setup:
+            service = new StaticConfigService()
+            service.buildDefault()
         expect:
             service.itemList().containsAll(ShoppingItem.values())
     }

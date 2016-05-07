@@ -17,9 +17,6 @@ public class StaticConfigService implements ConfigService {
 
     private Map<ShoppingItem, ShoppingItemConfig> config = new HashMap<>();
 
-    public StaticConfigService() {
-        buildDefault();
-    }
 
     @Override
     public BigDecimal getPriceForItem(ShoppingItem item) {
@@ -27,7 +24,7 @@ public class StaticConfigService implements ConfigService {
         ShoppingItemConfig configItem = config.get(item);
 
         if (configItem == null) {
-            throw new IllegalArgumentException("Cannot find blah: " + item);
+            throw new IllegalArgumentException("Cannot find item: " + item);
         }
 
         return configItem.getPrice();
@@ -35,7 +32,13 @@ public class StaticConfigService implements ConfigService {
 
     @Override
     public int getMinimumForItem(ShoppingItem item) {
-        return config.get(item).getMinCount();
+        ShoppingItemConfig configItem = config.get(item);
+
+        if (configItem == null) {
+            throw new IllegalArgumentException("Cannot find item: " + item);
+        }
+
+        return configItem.getMinCount();
     }
 
     @Override
@@ -43,7 +46,16 @@ public class StaticConfigService implements ConfigService {
         return config.keySet();
     }
 
-    private void buildDefault() {
+    public void setConfigForItem(ShoppingItem item, BigDecimal price, int minimum) {
+        ShoppingItemConfig sig = new ShoppingItemConfig();
+        sig.setBasketItem(item);
+        sig.setPrice(price);
+        sig.setMinCount(minimum);
+        config.put(item, sig);
+    }
+
+
+    public void buildDefault() {
         for (ShoppingItem item : ShoppingItem.values()) {
             ShoppingItemConfig sig = new ShoppingItemConfig();
             sig.setBasketItem(item);
