@@ -20,3 +20,18 @@ dependencies {
     testCompile 'junit:junit:4.12'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination "${buildDir}/jacocoHtml"
+    }
+}
+
+task jacocoReport(type: JacocoReport) {
+    sourceSets sourceSets.main
+    executionData test
+}
+
+check.dependsOn tasks.jacocoReport
