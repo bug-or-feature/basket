@@ -48,7 +48,6 @@ public class StaticConfigService implements ConfigService {
 
     public void setConfigForItem(ShoppingItem item, BigDecimal price, int minimum) {
         ShoppingItemConfig sig = new ShoppingItemConfig();
-        sig.setBasketItem(item);
         sig.setPrice(price);
         sig.setMinCount(minimum);
         config.put(item, sig);
@@ -58,7 +57,6 @@ public class StaticConfigService implements ConfigService {
     public void buildDefault() {
         for (ShoppingItem item : ShoppingItem.values()) {
             ShoppingItemConfig sig = new ShoppingItemConfig();
-            sig.setBasketItem(item);
             sig.setPrice(new BigDecimal("0.10").multiply(new BigDecimal(Integer.toString(item.ordinal() + 1)))); // just dummy data
             sig.setMinCount(1);
             config.put(item, sig);
@@ -68,19 +66,9 @@ public class StaticConfigService implements ConfigService {
 
     public static class ShoppingItemConfig {
 
-        private ShoppingItem basketItem;
-
         private int minCount;
 
         private BigDecimal price;
-
-        public ShoppingItem getBasketItem() {
-            return basketItem;
-        }
-
-        public void setBasketItem(ShoppingItem basketItem) {
-            this.basketItem = basketItem;
-        }
 
         public int getMinCount() {
             return minCount;
