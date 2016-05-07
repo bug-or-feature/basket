@@ -15,11 +15,11 @@ Build a command line application, with components designed for extensibility
 
 # howto
 
-* build
+build
 
     ./gradlew build
 
-* run
+run
 
     java -jar build/libs/basket-1.0.0.jar
 
