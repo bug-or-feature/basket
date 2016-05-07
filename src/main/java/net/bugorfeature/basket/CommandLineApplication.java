@@ -1,5 +1,6 @@
 package net.bugorfeature.basket;
 
+import java.io.FileReader;
 import java.math.BigDecimal;
 
 import org.slf4j.Logger;
@@ -9,9 +10,9 @@ import net.bugorfeature.basket.model.Basket;
 import net.bugorfeature.basket.model.BasketImpl;
 import net.bugorfeature.basket.model.ShoppingItem;
 import net.bugorfeature.basket.service.ConfigService;
+import net.bugorfeature.basket.service.DefaultConfigService;
 import net.bugorfeature.basket.service.DefaultPricingService;
 import net.bugorfeature.basket.service.PricingService;
-import net.bugorfeature.basket.service.DefaultConfigService;
 
 /**
  * Basket application
@@ -47,21 +48,48 @@ public class CommandLineApplication {
     public static void main(String[] args) {
 
         CommandLineApplication app = new CommandLineApplication();
-        app.setupDefaultServices();
+        if (args.length > 0) {
+            app.setupCustomConfigService(args[0]);
+        } else {
+            app.setupDefaultConfigService();
+        }
+        app.setupPricingService();
         app.runMinimalAppWithDefaultConfig();
     }
 
-    protected void setupDefaultServices() {
+    protected void setupCustomConfigService(String configFile) {
 
-        basket = new BasketImpl();
+        try {
+            configService = new DefaultConfigService();
+            configService.read(new FileReader(configFile));
+            setConfigService(configService);
 
-        configService = new DefaultConfigService();
-        ((DefaultConfigService)configService).buildDefault();
-        setConfigService(configService);
+        } catch (Exception e) {
+            LOGGER.error("Problem: " + e);
+        }
+    }
 
-        pricingService = new DefaultPricingService();
-        ((DefaultPricingService)pricingService).setConfigService(configService);
-        setPricingService(pricingService);
+    protected void setupDefaultConfigService() {
+
+        try {
+            configService = new DefaultConfigService();
+            ((DefaultConfigService) configService).buildDefault();
+            setConfigService(configService);
+
+        } catch (Exception e) {
+            LOGGER.error("Problem: " + e);
+        }
+    }
+
+    protected void setupPricingService() {
+        try {
+            pricingService = new DefaultPricingService();
+            ((DefaultPricingService) pricingService).setConfigService(configService);
+            setPricingService(pricingService);
+
+        } catch (Exception e) {
+            LOGGER.error("Problem: " + e);
+        }
     }
 
     protected void runMinimalAppWithDefaultConfig() {
