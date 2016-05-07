@@ -11,7 +11,7 @@ import net.bugorfeature.basket.model.ShoppingItem;
 import net.bugorfeature.basket.service.ConfigService;
 import net.bugorfeature.basket.service.DefaultPricingService;
 import net.bugorfeature.basket.service.PricingService;
-import net.bugorfeature.basket.service.StaticConfigService;
+import net.bugorfeature.basket.service.DefaultConfigService;
 
 /**
  * Basket application
@@ -55,8 +55,8 @@ public class CommandLineApplication {
 
         basket = new BasketImpl();
 
-        configService = new StaticConfigService();
-        ((StaticConfigService)configService).buildDefault();
+        configService = new DefaultConfigService();
+        ((DefaultConfigService)configService).buildDefault();
         setConfigService(configService);
 
         pricingService = new DefaultPricingService();

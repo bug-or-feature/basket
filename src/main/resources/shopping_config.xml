@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<basketConfig>
+    <products>
+        <entry>
+            <key>BANANA</key>
+            <value>
+                <minCount>1</minCount>
+                <price>0.10</price>
+            </value>
+        </entry>
+        <entry>
+            <key>ORANGE</key>
+            <value>
+                <minCount>1</minCount>
+                <price>0.20</price>
+            </value>
+        </entry>
+        <entry>
+            <key>APPLE</key>
+            <value>
+                <minCount>1</minCount>
+                <price>0.30</price>
+            </value>
+        </entry>
+        <entry>
+            <key>LEMON</key>
+            <value>
+                <minCount>1</minCount>
+                <price>0.40</price>
+            </value>
+        </entry>
+        <entry>
+            <key>PEACH</key>
+            <value>
+                <minCount>1</minCount>
+                <price>0.50</price>
+            </value>
+        </entry>
+    </products>
+</basketConfig>

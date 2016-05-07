@@ -1,5 +1,7 @@
 package net.bugorfeature.basket.service;
 
+import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.Collection;
 
@@ -17,5 +19,9 @@ public interface ConfigService {
     int getMinimumForItem(ShoppingItem item);
 
     Collection<ShoppingItem> itemList();
+
+    void read(Reader input) throws Exception;
+
+    void write(Writer ouput) throws Exception;
 
 }

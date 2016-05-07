@@ -1,10 +1,18 @@
 package net.bugorfeature.basket.service;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
+
+import java.io.Reader;
+import java.io.Writer;
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.EnumMap;
 
+import net.bugorfeature.basket.model.BasketConfig;
 import net.bugorfeature.basket.model.ShoppingItem;
+import net.bugorfeature.basket.model.ShoppingItemConfig;
 
 
 /**
@@ -12,9 +20,10 @@ import net.bugorfeature.basket.model.ShoppingItem;
  *
  * @author Andy Geach
  */
-public class StaticConfigService implements ConfigService {
+public class DefaultConfigService implements ConfigService {
 
-    private EnumMap<ShoppingItem, ShoppingItemConfig> config = new EnumMap<ShoppingItem, ShoppingItemConfig>(ShoppingItem.class);
+
+    private BasketConfig config = new BasketConfig();
 
 
     @Override
@@ -45,6 +54,21 @@ public class StaticConfigService implements ConfigService {
         return config.keySet();
     }
 
+    @Override
+    public void read(Reader input) throws JAXBException {
+        JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
+        Unmarshaller unmarshaller = jc.createUnmarshaller();
+        config = (BasketConfig) unmarshaller.unmarshal(input);
+    }
+
+    @Override
+    public void write(Writer output) throws JAXBException {
+        JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
+        Marshaller marshaller = jc.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+        marshaller.marshal(config, output);
+    }
+
     public void setConfigForItem(ShoppingItem item, BigDecimal price, int minimum) {
         ShoppingItemConfig sig = new ShoppingItemConfig();
         sig.setPrice(price);
@@ -52,37 +76,12 @@ public class StaticConfigService implements ConfigService {
         config.put(item, sig);
     }
 
-
     public void buildDefault() {
         for (ShoppingItem item : ShoppingItem.values()) {
             ShoppingItemConfig sig = new ShoppingItemConfig();
             sig.setPrice(new BigDecimal("0.10").multiply(new BigDecimal(Integer.toString(item.ordinal() + 1)))); // just dummy data
             sig.setMinCount(1);
             config.put(item, sig);
-        }
-    }
-
-
-    public static class ShoppingItemConfig {
-
-        private int minCount;
-
-        private BigDecimal price;
-
-        public int getMinCount() {
-            return minCount;
-        }
-
-        public void setMinCount(int minCount) {
-            this.minCount = minCount;
-        }
-
-        public BigDecimal getPrice() {
-            return price;
-        }
-
-        public void setPrice(BigDecimal price) {
-            this.price = price;
         }
     }
 }
