@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Simple list based implementation of Basket
  *
@@ -14,12 +11,15 @@ import org.slf4j.LoggerFactory;
  */
 public class BasketImpl implements Basket {
 
+    private List<ShoppingItem> shoppingItems = new ArrayList<>();
+
     @Override
     public void addItem(ShoppingItem item) {
+        shoppingItems.add(item);
     }
 
     @Override
     public Collection<ShoppingItem> getItems() {
-        return null;
+        return shoppingItems;
     }
 }
