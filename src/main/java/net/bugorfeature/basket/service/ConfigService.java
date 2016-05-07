@@ -20,8 +20,8 @@ public interface ConfigService {
 
     Collection<ShoppingItem> itemList();
 
-    void read(Reader input) throws Exception;
+    void read(Reader input);
 
-    void write(Writer ouput) throws Exception;
+    void write(Writer ouput);
 
 }

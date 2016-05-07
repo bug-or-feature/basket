@@ -3,10 +3,7 @@ package net.bugorfeature.basket.model;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import java.math.BigDecimal;
 import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**

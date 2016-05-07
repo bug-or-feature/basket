@@ -55,18 +55,26 @@ public class DefaultConfigService implements ConfigService {
     }
 
     @Override
-    public void read(Reader input) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
-        Unmarshaller unmarshaller = jc.createUnmarshaller();
-        config = (BasketConfig) unmarshaller.unmarshal(input);
+    public void read(Reader input) {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
+            Unmarshaller unmarshaller = jc.createUnmarshaller();
+            config = (BasketConfig) unmarshaller.unmarshal(input);
+        } catch (JAXBException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     @Override
-    public void write(Writer output) throws JAXBException {
-        JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
-        Marshaller marshaller = jc.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-        marshaller.marshal(config, output);
+    public void write(Writer output) {
+        try {
+            JAXBContext jc = JAXBContext.newInstance(BasketConfig.class);
+            Marshaller marshaller = jc.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
+            marshaller.marshal(config, output);
+        } catch (JAXBException e) {
+            throw new IllegalArgumentException(e);
+        }
     }
 
     public void setConfigForItem(ShoppingItem item, BigDecimal price, int minimum) {

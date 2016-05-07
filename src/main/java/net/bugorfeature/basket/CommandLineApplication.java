@@ -65,7 +65,7 @@ public class CommandLineApplication {
             setConfigService(configService);
 
         } catch (Exception e) {
-            LOGGER.error("Problem: " + e);
+            LOGGER.error("Problem setting up custom config: " + e);
         }
     }
 
@@ -77,7 +77,7 @@ public class CommandLineApplication {
             setConfigService(configService);
 
         } catch (Exception e) {
-            LOGGER.error("Problem: " + e);
+            LOGGER.error("Problem setting up default config: " + e);
         }
     }
 
@@ -88,7 +88,7 @@ public class CommandLineApplication {
             setPricingService(pricingService);
 
         } catch (Exception e) {
-            LOGGER.error("Problem: " + e);
+            LOGGER.error("Problem setting up pricing service: " + e);
         }
     }
 
