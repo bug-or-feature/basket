@@ -3,6 +3,9 @@ package net.bugorfeature.basket.service
 import net.bugorfeature.basket.model.ShoppingItem
 import spock.lang.Specification
 import spock.lang.Unroll
+
+import javax.xml.bind.JAXBException
+
 /**
  * Specification for StaticConfigService
  *
@@ -146,7 +149,7 @@ class DefaultConfigServiceSpec extends Specification {
             Writer badWriter = Mock(Writer)
 
         and:
-            _ * badWriter.flush() >> { throw new IllegalArgumentException("whatever") }
+            _ * badWriter.flush() >> { throw new JAXBException("whatever") }
 
         when:
             service.write(badWriter)
