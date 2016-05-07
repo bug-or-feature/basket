@@ -111,6 +111,19 @@ class DefaultConfigServiceSpec extends Specification {
             service.getMinimumForItem(ShoppingItem.BANANA) == 0
     }
 
+    def "read bad xml file"() {
+
+        setup:
+            service = new DefaultConfigService()
+
+        when:
+            service.read(new StringReader("crap"))
+
+        then:
+            thrown(IllegalArgumentException)
+
+    }
+
     def "write xml"() {
 
         setup:
@@ -123,6 +136,23 @@ class DefaultConfigServiceSpec extends Specification {
 
         then:
             removeWhitespace(output.toString().trim()).equals(removeWhitespace(CONFIG_STR.trim()))
+    }
+
+    def "write bad xml file"() {
+
+        given:
+            service = new DefaultConfigService()
+            service.setConfigForItem(ShoppingItem.BANANA, new BigDecimal("0.35"), 0)
+            Writer badWriter = Mock(Writer)
+
+        and:
+            _ * badWriter.flush() >> { throw new IllegalArgumentException("whatever") }
+
+        when:
+            service.write(badWriter)
+
+        then:
+            thrown(IllegalArgumentException)
     }
 
     private String removeWhitespace(String str) {
