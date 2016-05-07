@@ -14,10 +14,6 @@ public class DefaultPricingService implements PricingService {
 
     private ConfigService configService;
 
-    public ConfigService getConfigService() {
-        return configService;
-    }
-
     public void setConfigService(ConfigService configService) {
         this.configService = configService;
     }

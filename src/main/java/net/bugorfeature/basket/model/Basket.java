@@ -13,4 +13,6 @@ public interface Basket {
 
     Collection<ShoppingItem> getItems();
 
+    Collection<ShoppingItem> getItemsOfType(ShoppingItem item);
+
 }

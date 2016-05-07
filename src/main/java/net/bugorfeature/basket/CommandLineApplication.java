@@ -46,7 +46,8 @@ public class CommandLineApplication {
 
         CommandLineApplication app = new CommandLineApplication();
 
-        ConfigService configService = new StaticConfigService();
+        StaticConfigService configService = new StaticConfigService();
+        configService.buildDefault();
         app.setConfigService(configService);
 
         DefaultPricingService pricingService = new DefaultPricingService();
@@ -56,10 +57,25 @@ public class CommandLineApplication {
         app.runMinimalAppWithDefaultConfig();
     }
 
-    private void runMinimalAppWithDefaultConfig() {
+    protected void setupDefaultServices() {
+
+        CommandLineApplication app = new CommandLineApplication();
+
+        StaticConfigService configService = new StaticConfigService();
+        configService.buildDefault();
+        app.setConfigService(configService);
+
+        DefaultPricingService pricingService = new DefaultPricingService();
+        pricingService.setConfigService(configService);
+        app.setPricingService(pricingService);
+
+        app.runMinimalAppWithDefaultConfig();
+    }
+
+    protected void runMinimalAppWithDefaultConfig() {
         Basket basket = new BasketImpl();
         for (ShoppingItem item : configService.itemList()) {
-            for (int i = 0; i < configService.getMinimumForItem(item); i++) {
+            while (basket.getItemsOfType(item).size() < configService.getMinimumForItem(item)) {
                 basket.addItem(item);
             }
         }

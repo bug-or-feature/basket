@@ -23,4 +23,19 @@ class BasketSpec extends Specification {
             assert basket.getItems().contains(ShoppingItem.APPLE)
             assert basket.getItems().size() == 1
     }
+
+    def "filter"() {
+        setup:
+            basket = new BasketImpl()
+
+        when:
+            basket.addItem(ShoppingItem.APPLE)
+            basket.addItem(ShoppingItem.ORANGE)
+            basket.addItem(ShoppingItem.PEACH)
+
+        then:
+            assert basket.getItemsOfType(ShoppingItem.APPLE).contains(ShoppingItem.APPLE)
+            assert basket.getItemsOfType(ShoppingItem.APPLE).size() == 1
+    }
+
 }

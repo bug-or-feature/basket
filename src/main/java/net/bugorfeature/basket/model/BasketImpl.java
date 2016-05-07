@@ -3,6 +3,7 @@ package net.bugorfeature.basket.model;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Simple list based implementation of Basket
@@ -21,5 +22,11 @@ public class BasketImpl implements Basket {
     @Override
     public Collection<ShoppingItem> getItems() {
         return shoppingItems;
+    }
+
+    @Override
+    public Collection<ShoppingItem> getItemsOfType(ShoppingItem item) {
+        return shoppingItems.stream()
+            .filter(p -> p.equals(item)).collect(Collectors.toList());
     }
 }
