@@ -24,6 +24,17 @@ dependencies {
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
 
+jar {
+    manifest {
+        attributes (
+            'Main-Class': 'net.bugorfeature.basket.CommandLineApplication'
+        )
+    }
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 jacoco {
     toolVersion = "0.7.5.201505241946"
 }
@@ -44,8 +55,6 @@ task jacocoReport(type: JacocoReport) {
 sonarqube {
     properties {
         property "sonar.sourceEncoding", "UTF-8"
-        //property "sonar.log.level", "DEBUG"
-        //property "sonar.verbose", "TRUE"
     }
 }
 
