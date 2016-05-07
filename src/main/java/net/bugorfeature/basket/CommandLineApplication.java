@@ -20,11 +20,13 @@ import net.bugorfeature.basket.service.StaticConfigService;
  */
 public class CommandLineApplication {
 
-    private static final Logger log = LoggerFactory.getLogger(CommandLineApplication.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommandLineApplication.class);
 
     private ConfigService configService;
 
     private PricingService pricingService;
+
+    private Basket basket = new BasketImpl();
 
     public ConfigService getConfigService() {
         return configService;
@@ -45,41 +47,34 @@ public class CommandLineApplication {
     public static void main(String[] args) {
 
         CommandLineApplication app = new CommandLineApplication();
-
-        StaticConfigService configService = new StaticConfigService();
-        configService.buildDefault();
-        app.setConfigService(configService);
-
-        DefaultPricingService pricingService = new DefaultPricingService();
-        pricingService.setConfigService(configService);
-        app.setPricingService(pricingService);
-
+        app.setupDefaultServices();
         app.runMinimalAppWithDefaultConfig();
     }
 
     protected void setupDefaultServices() {
 
-        CommandLineApplication app = new CommandLineApplication();
+        basket = new BasketImpl();
 
-        StaticConfigService configService = new StaticConfigService();
-        configService.buildDefault();
-        app.setConfigService(configService);
+        configService = new StaticConfigService();
+        ((StaticConfigService)configService).buildDefault();
+        setConfigService(configService);
 
-        DefaultPricingService pricingService = new DefaultPricingService();
-        pricingService.setConfigService(configService);
-        app.setPricingService(pricingService);
-
-        app.runMinimalAppWithDefaultConfig();
+        pricingService = new DefaultPricingService();
+        ((DefaultPricingService)pricingService).setConfigService(configService);
+        setPricingService(pricingService);
     }
 
     protected void runMinimalAppWithDefaultConfig() {
-        Basket basket = new BasketImpl();
         for (ShoppingItem item : configService.itemList()) {
             while (basket.getItemsOfType(item).size() < configService.getMinimumForItem(item)) {
                 basket.addItem(item);
             }
         }
         BigDecimal total = pricingService.getTotal(basket.getItems());
-        log.info("Basket total: " + total);
+        LOGGER.info("Basket total: " + total);
+    }
+
+    protected BigDecimal getTotal() {
+        return pricingService.getTotal(basket.getItems());
     }
 }

@@ -2,8 +2,7 @@ package net.bugorfeature.basket.service;
 
 import java.math.BigDecimal;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.EnumMap;
 
 import net.bugorfeature.basket.model.ShoppingItem;
 
@@ -15,7 +14,7 @@ import net.bugorfeature.basket.model.ShoppingItem;
  */
 public class StaticConfigService implements ConfigService {
 
-    private Map<ShoppingItem, ShoppingItemConfig> config = new HashMap<>();
+    private EnumMap<ShoppingItem, ShoppingItemConfig> config = new EnumMap<ShoppingItem, ShoppingItemConfig>(ShoppingItem.class);
 
 
     @Override
