@@ -21,6 +21,13 @@ repositories {
 dependencies {
     compile 'ch.qos.logback:logback-classic:1.1.3'
     compile 'cglib:cglib-nodep:3.2.2'
+    compile 'org.springframework.boot:spring-boot-starter:1.3.2.RELEASE'
+    compile ('org.springframework.boot:spring-boot-cli:1.3.2.RELEASE') {
+        exclude group: 'org.apache.maven'
+        exclude group: 'org.eclipse.aether'
+        exclude group: 'org.codehaus.plexus'
+    }
+
     testCompile 'junit:junit:4.12'
     testCompile 'org.spockframework:spock-core:1.0-groovy-2.4'
 }
@@ -28,7 +35,7 @@ dependencies {
 jar {
     manifest {
         attributes (
-            'Main-Class': 'net.bugorfeature.basket.CommandLineApplication'
+            'Main-Class': 'net.bugorfeature.basket.SpringCommandLineApplication'
         )
     }
     from {

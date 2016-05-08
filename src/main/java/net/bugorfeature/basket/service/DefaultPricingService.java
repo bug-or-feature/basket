@@ -3,6 +3,8 @@ package net.bugorfeature.basket.service;
 import java.math.BigDecimal;
 import java.util.Collection;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import net.bugorfeature.basket.model.ShoppingItem;
 
 /**
@@ -12,6 +14,7 @@ import net.bugorfeature.basket.model.ShoppingItem;
  */
 public class DefaultPricingService implements PricingService {
 
+    @Autowired
     private ConfigService configService;
 
     public void setConfigService(ConfigService configService) {
