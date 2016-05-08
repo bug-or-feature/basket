@@ -2,10 +2,19 @@ package net.bugorfeature.basket;
 
 import java.io.FileReader;
 import java.math.BigDecimal;
+import java.util.Scanner;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.cli.util.Log;
+import org.springframework.boot.loader.tools.LogbackInitializer;
 
+import net.bugorfeature.basket.command.AddCommand;
+import net.bugorfeature.basket.command.BasketCommandRunner;
+import net.bugorfeature.basket.command.ExitCommand;
+import net.bugorfeature.basket.command.HelpCommand;
+import net.bugorfeature.basket.command.TotalCommand;
 import net.bugorfeature.basket.model.Basket;
 import net.bugorfeature.basket.model.BasketImpl;
 import net.bugorfeature.basket.model.ShoppingItem;
@@ -25,6 +34,7 @@ public class CommandLineApplication {
 
     private ConfigService configService;
 
+    @Autowired
     private PricingService pricingService;
 
     private Basket basket = new BasketImpl();
@@ -45,6 +55,14 @@ public class CommandLineApplication {
         this.pricingService = pricingService;
     }
 
+    public Basket getBasket() {
+        return basket;
+    }
+
+    public void setBasket(Basket basket) {
+        this.basket = basket;
+    }
+
     public static void main(String[] args) {
 
         CommandLineApplication app = new CommandLineApplication();
@@ -54,7 +72,33 @@ public class CommandLineApplication {
             app.setupDefaultConfigService();
         }
         app.setupPricingService();
-        app.runMinimalAppWithDefaultConfig();
+
+        System.setProperty("java.awt.headless", Boolean.toString(true));
+        LogbackInitializer.initialize();
+
+        BasketCommandRunner runner = new BasketCommandRunner("basket");
+        runner.addCommand(new HelpCommand(runner));
+        runner.addCommand(new TotalCommand());
+        runner.addCommand(new AddCommand());
+        runner.addCommand(new ExitCommand());
+
+        Log.info("Welcome to basket. Type 'help' to see available commands");
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) { // loop forever
+
+            //  prompt for the user's name
+            Log.infoPrint("> ");
+
+            // accept input
+            String command = scanner.nextLine();
+
+            int exitCode = runner.runAndHandleErrors(command.split("\\s+"));
+            if (exitCode != 0 || command.equals("exit")) {
+                System.exit(exitCode);
+            }
+        }
     }
 
     protected void setupCustomConfigService(String configFile) {
