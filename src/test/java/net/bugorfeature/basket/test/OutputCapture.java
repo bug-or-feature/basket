@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.bugorfeature.basket;
+package net.bugorfeature.basket.test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -40,7 +40,6 @@ public class OutputCapture implements TestRule {
 
     private ByteArrayOutputStream copy;
 
-
     @Override
     public Statement apply(final Statement base, Description description) {
         return new Statement() {
@@ -54,7 +53,6 @@ public class OutputCapture implements TestRule {
     }
 
     protected void captureOutput() {
-
         this.copy = new ByteArrayOutputStream();
         this.captureOut = new CaptureOutputStream(System.out, this.copy);
         this.captureErr = new CaptureOutputStream(System.err, this.copy);
@@ -122,6 +120,5 @@ public class OutputCapture implements TestRule {
             this.copy.flush();
             this.original.flush();
         }
-
     }
 }
