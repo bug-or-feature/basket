@@ -17,10 +17,6 @@ import org.springframework.boot.cli.util.Log;
  */
 public class BasketCommandRunner extends CommandRunner {
 
-    public BasketCommandRunner(String name) {
-        super(name);
-    }
-
     @Autowired
     private HelpCommand helpCommand;
 
@@ -32,6 +28,10 @@ public class BasketCommandRunner extends CommandRunner {
 
     @Autowired
     private ExitCommand exitCommand;
+
+    public BasketCommandRunner(String name) {
+            super(name);
+        }
 
     @PostConstruct
     public void init() {
