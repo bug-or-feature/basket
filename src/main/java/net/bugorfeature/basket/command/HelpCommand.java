@@ -15,13 +15,11 @@
  */
 package net.bugorfeature.basket.command;
 
-import java.util.Collection;
 import java.util.Iterator;
 
 import org.springframework.boot.cli.command.AbstractCommand;
 import org.springframework.boot.cli.command.Command;
 import org.springframework.boot.cli.command.CommandRunner;
-import org.springframework.boot.cli.command.HelpExample;
 import org.springframework.boot.cli.command.NoSuchCommandException;
 import org.springframework.boot.cli.command.status.ExitStatus;
 import org.springframework.boot.cli.util.Log;
@@ -65,17 +63,6 @@ public class HelpCommand extends AbstractCommand {
                 if (command.getHelp() != null) {
                     Log.info(command.getHelp());
                 }
-                Collection<HelpExample> examples = command.getExamples();
-                if (examples != null) {
-                    Log.info(examples.size() == 1 ? "example:" : "examples:");
-                    Log.info("");
-                    for (HelpExample example : examples) {
-                        Log.info("    " + example.getDescription() + ":");
-                        Log.info("        $ " + example.getExample());
-                        Log.info("");
-                    }
-                    Log.info("");
-                }
                 return ExitStatus.OK;
             }
         }
@@ -92,8 +79,8 @@ public class HelpCommand extends AbstractCommand {
             String usageHelp = command.getUsageHelp();
             String description = command.getDescription();
             Log.info(String.format("\n  %1$s %2$-15s\n    %3$s", command.getName(),
-                    (usageHelp == null ? "" : usageHelp),
-                    (description == null ? "" : description)));
+                    usageHelp == null ? "" : usageHelp,
+                    description == null ? "" : description));
         }
         Log.info("");
     }

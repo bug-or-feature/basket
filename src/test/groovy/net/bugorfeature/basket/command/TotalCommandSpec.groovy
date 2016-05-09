@@ -27,10 +27,8 @@ class TotalCommandSpec extends Specification {
 
     def setup() {
         command = new TotalCommand()
-        //mockConfigService = Mock(ConfigService)
         mockPricingService = Mock(PricingService)
         mockBasket = Mock(Basket)
-        //command.setConfigService(mockConfigService)
         command.setPricingService(mockPricingService)
         command.setBasket(mockBasket)
     }

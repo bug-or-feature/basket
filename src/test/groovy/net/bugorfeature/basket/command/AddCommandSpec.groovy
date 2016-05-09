@@ -62,7 +62,7 @@ class AddCommandSpec extends Specification {
 
         then:
             status == ExitStatus.ERROR
-            output.toString().contains("Unknown product")
+            output.toString().contains("No enum constant")
     }
 
     def "unconfigured item results in error"() {

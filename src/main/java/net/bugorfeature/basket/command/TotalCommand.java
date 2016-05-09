@@ -4,14 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.cli.command.AbstractCommand;
 import org.springframework.boot.cli.command.status.ExitStatus;
 import org.springframework.boot.cli.util.Log;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
-import net.bugorfeature.basket.CommandLineApplication;
 import net.bugorfeature.basket.model.Basket;
-import net.bugorfeature.basket.model.BasketImpl;
-import net.bugorfeature.basket.service.ConfigService;
-import net.bugorfeature.basket.service.DefaultPricingService;
 import net.bugorfeature.basket.service.PricingService;
 
 /**

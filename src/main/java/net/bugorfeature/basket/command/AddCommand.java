@@ -1,21 +1,13 @@
 package net.bugorfeature.basket.command;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.cli.command.AbstractCommand;
-import org.springframework.boot.cli.command.HelpExample;
-import org.springframework.boot.cli.command.options.OptionHelp;
 import org.springframework.boot.cli.command.status.ExitStatus;
 import org.springframework.boot.cli.util.Log;
 
 import net.bugorfeature.basket.model.Basket;
 import net.bugorfeature.basket.model.ShoppingItem;
 import net.bugorfeature.basket.service.ConfigService;
-import net.bugorfeature.basket.service.PricingService;
 
 /**
  * Command that adds item to the basket
@@ -40,14 +32,6 @@ public class AddCommand extends AbstractCommand {
         return "<item> <count>";
     }
 
-    /*@Override
-    public Collection<HelpExample> getExamples() {
-        List<HelpExample> examples = new ArrayList<HelpExample>();
-        examples.add(new HelpExample("Add one Apple", "add APPLE 1"));
-        examples.add(new HelpExample("Add three Peaches", "add PEACH 3"));
-        return examples;
-    }*/
-
     /**
      * Run the command.
      *
@@ -65,12 +49,8 @@ public class AddCommand extends AbstractCommand {
             }
 
             // check first matches one of our products
-            ShoppingItem item = null;
-            try {
-                item = ShoppingItem.valueOf(args[0]);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException("Unknown product: " + args[0]);
-            }
+            ShoppingItem item = ShoppingItem.valueOf(args[0]);
+
             if (!configService.itemList().contains(item)) {
                 throw new IllegalArgumentException(String.format("Shopping item '%s' is not configured", item));
             }
@@ -90,7 +70,7 @@ public class AddCommand extends AbstractCommand {
             }
 
         } catch (Exception ex) {
-            Log.error(ex.getMessage());
+            Log.error(ex);
             return ExitStatus.ERROR;
         }
 

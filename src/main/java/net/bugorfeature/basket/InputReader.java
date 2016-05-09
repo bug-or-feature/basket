@@ -81,7 +81,7 @@ public class InputReader implements CommandLineRunner {
             String command = scanner.nextLine();
 
             int exitCode = runner.runAndHandleErrors(command.split("\\s+"));
-            if (exitCode != 0 || command.equals("exit")) {
+            if (exitCode != 0 || "exit".equals(command)) {
                 System.exit(exitCode);
             }
         }
