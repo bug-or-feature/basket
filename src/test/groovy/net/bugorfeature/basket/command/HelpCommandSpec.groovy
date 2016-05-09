@@ -86,6 +86,24 @@ class HelpCommandSpec extends Specification {
             command.getUsageHelp().contains("[command]")
     }
 
+    def "usage and help is output when the command supports it"() {
+        given:
+            HelpCommand command = new HelpCommand(commandRunner)
+            ExitStatus status
+            1 * commandRunner.iterator() >> iterator
+            1 * iterator.hasNext() >>> [true, false]
+            1 * iterator.next() >>> [new AddCommand()]
+
+        when:
+            status = command.run("add")
+
+        then:
+            status == ExitStatus.OK
+            output.toString().contains("Add items to the basket")
+            output.toString().contains("usage")
+            output.toString().contains("'add PEACH 3'")
+    }
+
     private class CommandIterator implements Iterator<Command> {
         @Override
         boolean hasNext() {

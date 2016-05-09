@@ -32,6 +32,11 @@ public class AddCommand extends AbstractCommand {
         return "<item> <count>";
     }
 
+    @Override
+    public String getHelp() {
+        return "Add shopping items to the basket, eg 'add PEACH 3''";
+    }
+
     /**
      * Run the command.
      *
