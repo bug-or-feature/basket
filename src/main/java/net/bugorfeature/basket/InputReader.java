@@ -9,8 +9,6 @@ import org.springframework.boot.cli.util.Log;
 
 import net.bugorfeature.basket.command.AddCommand;
 import net.bugorfeature.basket.command.BasketCommandRunner;
-import net.bugorfeature.basket.command.ExitCommand;
-import net.bugorfeature.basket.command.HelpCommand;
 import net.bugorfeature.basket.command.TotalCommand;
 import net.bugorfeature.basket.service.ConfigService;
 import net.bugorfeature.basket.service.DefaultConfigService;
@@ -31,6 +29,8 @@ public class InputReader implements CommandLineRunner {
     @Autowired
     private ConfigService configService;
 
+    @Autowired
+    private BasketCommandRunner runner;
 
     /**
      * Callback used to run the bean.
@@ -46,12 +46,6 @@ public class InputReader implements CommandLineRunner {
         } else {
             ((DefaultConfigService) configService).buildDefault();
         }
-
-        BasketCommandRunner runner = new BasketCommandRunner("basket");
-        runner.addCommand(new HelpCommand(runner));
-        runner.addCommand(totalCommand);
-        runner.addCommand(addCommand);
-        runner.addCommand(new ExitCommand());
 
         Log.info("Welcome to basket. Type 'help' to see available commands");
 

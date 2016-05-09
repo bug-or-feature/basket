@@ -1,7 +1,10 @@
 package net.bugorfeature.basket.command;
 
+import javax.annotation.PostConstruct;
+
 import java.util.Arrays;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.cli.command.Command;
 import org.springframework.boot.cli.command.CommandRunner;
 import org.springframework.boot.cli.command.status.ExitStatus;
@@ -16,6 +19,26 @@ public class BasketCommandRunner extends CommandRunner {
 
     public BasketCommandRunner(String name) {
         super(name);
+    }
+
+    @Autowired
+    private HelpCommand helpCommand;
+
+    @Autowired
+    private AddCommand addCommand;
+
+    @Autowired
+    private TotalCommand totalCommand;
+
+    @Autowired
+    private ExitCommand exitCommand;
+
+    @PostConstruct
+    public void init() {
+        addCommand(helpCommand);
+        addCommand(addCommand);
+        addCommand(totalCommand);
+        addCommand(exitCommand);
     }
 
     /**

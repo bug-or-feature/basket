@@ -5,6 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import net.bugorfeature.basket.command.AddCommand;
+import net.bugorfeature.basket.command.BasketCommandRunner;
+import net.bugorfeature.basket.command.ExitCommand;
+import net.bugorfeature.basket.command.HelpCommand;
 import net.bugorfeature.basket.command.TotalCommand;
 import net.bugorfeature.basket.model.Basket;
 import net.bugorfeature.basket.model.BasketImpl;
@@ -50,6 +53,11 @@ public class SpringCommandLineApplication {
     }
 
     @Bean
+    public BasketCommandRunner commandRunner() {
+        return new BasketCommandRunner("basket");
+    }
+
+    @Bean
     public TotalCommand totalCommand() {
         TotalCommand totalCommand = new TotalCommand();
         totalCommand.setPricingService(pricingService());
@@ -63,5 +71,15 @@ public class SpringCommandLineApplication {
         addCommand.setBasket(basket());
         addCommand.setConfigService(configService());
         return addCommand;
+    }
+
+    @Bean
+    public HelpCommand helpCommand() {
+        return new HelpCommand();
+    }
+
+    @Bean
+    public ExitCommand exitCommand() {
+        return new ExitCommand();
     }
 }

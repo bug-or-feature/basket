@@ -17,6 +17,7 @@ package net.bugorfeature.basket.command;
 
 import java.util.Iterator;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.cli.command.AbstractCommand;
 import org.springframework.boot.cli.command.Command;
 import org.springframework.boot.cli.command.CommandRunner;
@@ -33,7 +34,12 @@ import org.springframework.boot.cli.util.Log;
  */
 public class HelpCommand extends AbstractCommand {
 
+    @Autowired
     private CommandRunner runner;
+
+    public HelpCommand() {
+        super("help", "Get help on commands");
+    }
 
     public HelpCommand(CommandRunner commandRunner) {
         super("help", "Get help on commands");
