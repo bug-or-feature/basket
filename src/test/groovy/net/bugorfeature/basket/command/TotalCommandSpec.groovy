@@ -1,6 +1,6 @@
 package net.bugorfeature.basket.command
 
-import net.bugorfeature.basket.OutputCapture
+import net.bugorfeature.basket.test.OutputCapture
 import net.bugorfeature.basket.model.Basket
 import net.bugorfeature.basket.model.ShoppingItem
 import net.bugorfeature.basket.service.ConfigService

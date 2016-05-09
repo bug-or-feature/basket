@@ -1,8 +1,8 @@
 package net.bugorfeature.basket.command
 
-import net.bugorfeature.basket.OutputCapture
 import org.junit.Rule
 import org.springframework.boot.cli.command.status.ExitStatus
+import org.springframework.boot.test.OutputCapture
 import spock.lang.Specification
 
 /**

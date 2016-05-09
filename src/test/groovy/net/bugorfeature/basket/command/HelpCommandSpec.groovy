@@ -1,6 +1,6 @@
 package net.bugorfeature.basket.command
 
-import net.bugorfeature.basket.OutputCapture
+import net.bugorfeature.basket.test.OutputCapture
 import org.junit.Rule
 import org.springframework.boot.cli.command.Command
 import org.springframework.boot.cli.command.CommandRunner
