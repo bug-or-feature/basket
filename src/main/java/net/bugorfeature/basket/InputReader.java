@@ -32,6 +32,9 @@ public class InputReader implements CommandLineRunner {
     @Autowired
     private BasketCommandRunner runner;
 
+    private volatile boolean exitRequested = false;
+
+
     /**
      * Callback used to run the bean.
      *
@@ -51,18 +54,35 @@ public class InputReader implements CommandLineRunner {
 
         Scanner scanner = new Scanner(System.in);
 
-        while (true) { // loop forever
+        Thread userInputThread = new Thread(new Runnable() {
+            public void run() {
+                while (!exitRequested) {
 
-            //  prompt for the user's name
-            Log.infoPrint("> ");
+                    //  prompt for the user's name
+                    Log.infoPrint("> ");
 
-            // accept input
-            String command = scanner.nextLine();
+                    // accept input
+                    String command = null;
+                    if (scanner.hasNext()) {
+                        command = scanner.nextLine();
 
-            int exitCode = runner.runAndHandleErrors(command.split("\\s+"));
-            if (exitCode != 0 || "exit".equals(command)) {
-                System.exit(exitCode);
+                        int exitCode = runner.runAndHandleErrors(command.split("\\s+"));
+                        if (exitCode != 0 || "exit".equals(command)) {
+                            exitRequested = true;
+                            System.exit(exitCode);
+                        }
+                    }
+                }
             }
-        }
+        });
+        userInputThread.start();
+    }
+
+    public void setConfigService(ConfigService configService) {
+        this.configService = configService;
+    }
+
+    public void setRunner(BasketCommandRunner runner) {
+        this.runner = runner;
     }
 }
