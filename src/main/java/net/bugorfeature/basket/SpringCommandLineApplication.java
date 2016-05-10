@@ -48,7 +48,7 @@ public class SpringCommandLineApplication {
     }
 
     @Bean
-    public InputReader runner() {
+    public InputReader stdInputReader() {
         return new InputReader();
     }
 
