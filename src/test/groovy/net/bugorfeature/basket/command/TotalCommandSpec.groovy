@@ -1,14 +1,13 @@
 package net.bugorfeature.basket.command
 
-import net.bugorfeature.basket.test.OutputCapture
 import net.bugorfeature.basket.model.Basket
 import net.bugorfeature.basket.model.ShoppingItem
 import net.bugorfeature.basket.service.ConfigService
 import net.bugorfeature.basket.service.PricingService
 import org.junit.Rule
+import org.junit.contrib.java.lang.system.SystemOutRule
 import org.springframework.boot.cli.command.status.ExitStatus
 import spock.lang.Specification
-
 /**
  * Specification for TotalCommand
  *
@@ -17,7 +16,7 @@ import spock.lang.Specification
 class TotalCommandSpec extends Specification {
 
     @Rule
-    OutputCapture output = new OutputCapture()
+    SystemOutRule output = new SystemOutRule().enableLog();
 
     ConfigService mockConfigService
     PricingService mockPricingService
@@ -44,6 +43,6 @@ class TotalCommandSpec extends Specification {
 
         then:
             status == ExitStatus.OK
-            output.toString().contains("0.25")
+            output.getLog().contains("0.25")
     }
 }

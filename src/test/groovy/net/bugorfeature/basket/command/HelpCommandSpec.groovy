@@ -1,13 +1,12 @@
 package net.bugorfeature.basket.command
 
-import net.bugorfeature.basket.test.OutputCapture
 import org.junit.Rule
+import org.junit.contrib.java.lang.system.SystemOutRule
 import org.springframework.boot.cli.command.Command
 import org.springframework.boot.cli.command.CommandRunner
 import org.springframework.boot.cli.command.NoSuchCommandException
 import org.springframework.boot.cli.command.status.ExitStatus
 import spock.lang.Specification
-
 /**
  * Specification for HelpCommand
  *
@@ -16,7 +15,7 @@ import spock.lang.Specification
 class HelpCommandSpec extends Specification {
 
     @Rule
-    OutputCapture output = new OutputCapture()
+    SystemOutRule output = new SystemOutRule().enableLog();
 
     CommandRunner commandRunner
     CommandIterator iterator
@@ -41,7 +40,7 @@ class HelpCommandSpec extends Specification {
 
         then:
             status == ExitStatus.OK
-            output.toString().contains("Available commands are")
+            output.getLog().contains("Available commands are")
     }
 
     def "help with valid command"() {
@@ -58,8 +57,8 @@ class HelpCommandSpec extends Specification {
 
         then:
             status == ExitStatus.OK
-            output.toString().contains("exit")
-            output.toString().contains("Exit the application")
+            output.getLog().contains("exit")
+            output.getLog().contains("Exit the application")
     }
 
     def "help with unknown command"() {
@@ -99,9 +98,9 @@ class HelpCommandSpec extends Specification {
 
         then:
             status == ExitStatus.OK
-            output.toString().contains("Add items to the basket")
-            output.toString().contains("usage")
-            output.toString().contains("'add PEACH 3'")
+            output.getLog().contains("Add items to the basket")
+            output.getLog().contains("usage")
+            output.getLog().contains("'add PEACH 3'")
     }
 
     private class CommandIterator implements Iterator<Command> {
