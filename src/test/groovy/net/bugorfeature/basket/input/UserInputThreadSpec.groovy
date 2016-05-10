@@ -26,6 +26,6 @@ class UserInputThreadSpec extends Specification {
             thread.run()
 
         then:
-            1 * mockRunner.runAndHandleErrors(_)
+            1 * mockRunner.runAndHandleErrors(_) >> 0
     }
 }
