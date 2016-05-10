@@ -1,5 +1,7 @@
 package net.bugorfeature.basket;
 
+import java.util.Scanner;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +11,8 @@ import net.bugorfeature.basket.command.BasketCommandRunner;
 import net.bugorfeature.basket.command.ExitCommand;
 import net.bugorfeature.basket.command.HelpCommand;
 import net.bugorfeature.basket.command.TotalCommand;
+import net.bugorfeature.basket.input.InputReader;
+import net.bugorfeature.basket.input.UserInputThread;
 import net.bugorfeature.basket.model.Basket;
 import net.bugorfeature.basket.model.BasketImpl;
 import net.bugorfeature.basket.service.ConfigService;
@@ -50,6 +54,14 @@ public class SpringCommandLineApplication {
     @Bean
     public InputReader stdInputReader() {
         return new InputReader();
+    }
+
+    @Bean
+    public UserInputThread inputThread() {
+        UserInputThread inputThread = new UserInputThread();
+        inputThread.setRunner(commandRunner());
+        inputThread.setScanner(new Scanner(System.in));
+        return inputThread;
     }
 
     @Bean

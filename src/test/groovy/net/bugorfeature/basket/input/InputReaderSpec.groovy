@@ -1,4 +1,4 @@
-package net.bugorfeature.basket
+package net.bugorfeature.basket.input
 
 import net.bugorfeature.basket.command.BasketCommandRunner
 import net.bugorfeature.basket.service.DefaultConfigService
@@ -8,15 +8,13 @@ import org.junit.contrib.java.lang.system.TextFromStandardInputStream
 import spock.lang.Specification
 
 import static org.junit.contrib.java.lang.system.TextFromStandardInputStream.emptyStandardInputStream
+
 /**
  * Specification for InputReader
  *
  * @author Andy Geach
  */
 class InputReaderSpec extends Specification {
-
-    //@Rule
-    //OutputCapture output = new OutputCapture()
 
     @Rule
     TextFromStandardInputStream systemIn = emptyStandardInputStream();
@@ -31,22 +29,13 @@ class InputReaderSpec extends Specification {
 
     def setup() {
         reader = new InputReader()
-
         configService = Mock(DefaultConfigService)
         reader.setConfigService(configService)
-
-        mockRunner = Mock(BasketCommandRunner)
-        reader.setRunner(mockRunner)
-    }
-
-    def cleanup() {
-
     }
 
     def "startup with no args results in default config"() {
         when:
             reader.run()
-            //systemIn.provideLines()
 
         then:
             1 * configService.buildDefault()
