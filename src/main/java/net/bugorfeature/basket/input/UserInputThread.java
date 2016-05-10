@@ -34,9 +34,8 @@ public class UserInputThread implements Runnable {
             Log.infoPrint("> ");
 
             // accept input
-            String command = null;
             if (scanner.hasNext()) {
-                command = scanner.nextLine();
+                String command = scanner.nextLine();
 
                 int exitCode = runner.runAndHandleErrors(command.split("\\s+"));
                 if (exitCode != 0 || "exit".equals(command)) {
